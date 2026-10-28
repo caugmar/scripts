@@ -1,0 +1,3 @@
+#!/bin/sh
+virsh --connect qemu:///system managedsave --verbose win10
+

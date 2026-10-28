@@ -1,0 +1,28 @@
+#!/bin/sh
+VM=win10
+CONN=qemu:///system
+MAX_TRIES=30
+WAIT_SECONDS=2
+
+virsh --connect "$CONN" start "$VM"
+
+# Aguarda o QEMU Guest Agent responder dentro da VM antes de tentar o sync.
+# Isso evita depender de um "sleep" fixo, que pode ser curto demais ou
+# desnecessariamente longo dependendo da velocidade de boot do Windows.
+i=0
+while [ "$i" -lt "$MAX_TRIES" ]; do
+    if virsh --connect "$CONN" qemu-agent-command "$VM" \
+        '{"execute":"guest-ping"}' >/dev/null 2>&1; then
+        break
+    fi
+    i=$((i + 1))
+    sleep "$WAIT_SECONDS"
+done
+
+if [ "$i" -ge "$MAX_TRIES" ]; then
+    echo "Aviso: guest agent não respondeu a tempo; pulando sincronização de relógio." >&2
+else
+    virsh --connect "$CONN" domtime "$VM" --now
+fi
+
+virt-viewer --connect "$CONN" --full-screen --hotkeys=release-cursor=ctrl+alt "$VM" &

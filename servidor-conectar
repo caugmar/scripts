@@ -1,0 +1,4 @@
+#!/bin/sh
+#xfreerdp3 +dynamic-resolution +home-drive +auto-reconnect /f /d:Guto /p:'G4ivota C0fre A1ambique' /v:192.168.1.249 /smartcard -grab-keyboard &
+xfreerdp3 +dynamic-resolution +home-drive +drives +auto-reconnect /f /u:Guto /p:guto /v:192.168.1.178 /smartcard -grab-keyboard &
+
