@@ -3,7 +3,7 @@
 CURRENT_DESKTOP=$(wmctrl -d | awk '$2 == "*" {print $1}')
 BEFORE_WINDOWS=$(wmctrl -lpx | awk '{print $1}')
 
-# Abre um novo frame com o Emacs Everywhere
+# Executa o Emacs Everywhere no servidor gerenciado pelo systemd.
 emacsclient --eval '(emacs-everywhere)'
 
 

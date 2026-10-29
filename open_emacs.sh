@@ -3,8 +3,8 @@
 CURRENT_DESKTOP=$(wmctrl -d | awk '$2 == "*" {print $1}')
 BEFORE_WINDOWS=$(wmctrl -lpx | awk '{print $1}')
 
-# Abre um novo frame do Emacs em segundo plano.
-emacsclient -n -c -a '' &
+# Abre um novo frame no servidor do Emacs gerenciado pelo systemd.
+emacsclient -n -c &
 
 # Aguarda o novo frame aparecer e identifica-o pela classe da janela.
 WINDOW_ID=""
